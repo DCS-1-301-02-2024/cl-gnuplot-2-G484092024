@@ -22,10 +22,27 @@
 
 - 格子状の補助線を入れる
 
-![関数のプロット](funcplot.png)
+![関数のプロット](funcplot.png
+)
 
 ```gnuplot {cmd=true output="html"}
 set terminal svg
+set xrange [0:7]
+set yrange [-20:15]
+set title "関数のプロット"
+set xlabel "x"
+set ylabel "y"
+set grid
+
+f1(x) = 2*x**2*sqrt(x)-5*x**2
+f2(x) = x/log(x)
+
+plot f1(x) title 'f1(x)' , f2(x) title 'f2(x)' 
+
+
+
+
+
 
 ```
 
@@ -47,6 +64,13 @@ set terminal svg
 set xdata time
 set timefmt '%Y/%m/%d'
 set xtics format "%m/%d"
+set title "八王子の気温(過去一年間)"
+set xlabel "日付"
+set ylabel "温度"
+set yrange [-10:40]
+set grid
+set datafile separator comma
+plot "weather2024.csv" using 1:2 w l t "最高気温" ,"weather2024.csv" using 1:3 w l t "最高気温（平年）","weather2024.csv" using 1:4 w l t "最低気温" ,"weather2024.csv" using 1:5 w l t "最低気温（平年）"
 
 ```
 
@@ -54,7 +78,8 @@ set xtics format "%m/%d"
 
 次の「みほん」の図と同じようになるように gnuplotの記述を追記せよ.
 
-![誕生日の月別人数のグラフ](birthMonth.png)
+![誕生日の月別人数のグラフ](birthMonth.png
+)
 
 - データは `bm.txt` から取り出し，棒グラフにする
 - y軸の範囲は $0 \le y \le 16$とする
@@ -67,5 +92,13 @@ set xtics format "%m/%d"
 ```gnuplot {cmd=true, output="html"}
 set terminal svg
 unset key
+set style fill solid
+set boxwidth 0.6
+set yrange [0:16]
+set grid
+set title "誕生日の月別人数"
+set ylabel "人" offset graph 0,0.5 rotate by 0
+
+plot 'bm.txt' using 1:2:xtic(1) with boxes lc rgb 'skyblue' notitle
 
 ```
